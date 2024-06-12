@@ -137,7 +137,7 @@ const main = async () => {
                 console.log(`Ahead By: ${tableContent.totalHours} Hours, ${tableContent.totalMinutes} Minutes`);
             }
             
-            await fs.writeFile('tableContent.json', JSON.stringify(tableContent, null, 2));
+            // await fs.writeFile('tableContent.json', JSON.stringify(tableContent, null, 2));
         } else {
             console.log('No table found with id="product-table"');
         }
