@@ -1,8 +1,7 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
-import { LOGINURL, TIMESHEETURL, COMPTIMESHEETURL } from './secret.js';
+import { LOGINURL, COMPTIMESHEETURL } from './secret.js';
 import { executablePath } from 'puppeteer';
-import fs from 'fs/promises';
 import { setTimeout } from "node:timers/promises";
 import readlineSync from 'readline-sync';
 
@@ -29,32 +28,6 @@ const main = async () => {
             page.waitForNavigation({ waitUntil: 'networkidle2' }) // Wait for navigation after login
         ]);
         console.log('Logged in successfully.');
-
-        await page.goto(TIMESHEETURL, { waitUntil: 'networkidle2' });
-
-        // Check if the "Monthly" link exists
-        const ulSelector = 'ul.shadetabs';
-        await page.waitForSelector(ulSelector, { timeout: 60000 });
-
-        const linkText = 'Monthly';
-        const monthlyLinkExists = await page.evaluate((text) => {
-            const link = Array.from(document.querySelectorAll('ul.shadetabs li a')).find(el => el.textContent.includes(text));
-            return !!link;
-        }, linkText);
-        // console.log('Monthly link exists:', monthlyLinkExists);
-
-        if (monthlyLinkExists) {
-            await page.evaluate((text) => {
-                const link = Array.from(document.querySelectorAll('ul.shadetabs li a')).find(el => el.textContent.includes(text));
-                if (link) {
-                    link.click();
-                }
-            }, linkText);
-        } else {
-            console.error('Monthly link not found.');
-            await browser.close();
-            return;
-        }
 
         await setTimeout(2000);
 
@@ -136,8 +109,6 @@ const main = async () => {
             }else{
                 console.log(`Ahead By: ${tableContent.totalHours} Hours, ${tableContent.totalMinutes} Minutes`);
             }
-            
-            // await fs.writeFile('tableContent.json', JSON.stringify(tableContent, null, 2));
         } else {
             console.log('No table found with id="product-table"');
         }
