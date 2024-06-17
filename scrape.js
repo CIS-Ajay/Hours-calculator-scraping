@@ -1,13 +1,16 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { LOGINURL, COMPTIMESHEETURL } from './secret.js';
-import { executablePath } from 'puppeteer';
 import { setTimeout } from 'node:timers/promises';
 
 puppeteer.use(StealthPlugin());
 
 export const scrapeData = async (EMAIL, PASSWORD) => {
-    const browser = await puppeteer.launch({ headless: true, executablePath: executablePath() });
+    const browser = await puppeteer.launch({
+        headless: true,
+        executablePath: process.env.CHROME_PATH || '/home/cis/.cache/puppeteer/chrome/linux-125.0.6422.78/chrome-linux64/chrome',
+        args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     const page = await browser.newPage();
 
     try {
