@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "main": "app.js",
-  "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "npx puppeteer install"
-  },
+"scripts": {
+  "start": "node app.js",
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "postinstall": "bash install_chrome.sh"
+},
   "author": "",
   "license": "ISC",
   "description": "",
@@ -24,6 +24,6 @@
     "readline-sync": "^1.4.10"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": "18.x"
   }
 }
