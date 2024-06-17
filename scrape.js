@@ -2,15 +2,21 @@ import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 import { LOGINURL, COMPTIMESHEETURL } from './secret.js';
 import { setTimeout } from 'node:timers/promises';
+import path from 'path';
+import fs from 'fs';
 
 puppeteer.use(StealthPlugin());
 
 export const scrapeData = async (EMAIL, PASSWORD) => {
+    const chromePath = process.env.CHROME_PATH || '/opt/render/.cache/puppeteer/chrome/linux-*/chrome-linux64/chrome';
+    const executablePath = fs.existsSync(chromePath) ? chromePath : '/usr/bin/google-chrome-stable';
+
     const browser = await puppeteer.launch({
         headless: true,
-        executablePath: process.env.CHROME_PATH || '/home/cis/.cache/puppeteer/chrome/linux-125.0.6422.78/chrome-linux64/chrome',
+        executablePath: executablePath,
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
+
     const page = await browser.newPage();
 
     try {

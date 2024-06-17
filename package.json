@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "type": "module",
   "main": "app.js",
-"scripts": {
-  "start": "node app.js",
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "postinstall": "bash install_chrome.sh"
-},
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bash install_chrome.sh"
+  },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
     "axios": "^1.7.2",
-    "body-parser": "^1.20.1",
     "cheerio": "^1.0.0-rc.12",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
